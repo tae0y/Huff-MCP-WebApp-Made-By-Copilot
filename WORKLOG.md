@@ -44,6 +44,15 @@
 - [x] 빠른설정/초기화 기능
 - [x] 반응형 디자인 및 접근성 개선
 
+### Azure OpenAI 연동 세부 작업계획
+- [ ] AzureOpenAIProvider에 실제 API 호출 코드 구현 (REST/SDK)
+- [ ] 환경설정(appsettings.json)에서 엔드포인트/키/배포명 등 읽기
+- [ ] ConfigurationService 연동 및 설정값 검증
+- [ ] 예외/에러 처리 (인증, 네트워크, 응답, 레이트리밋 등)
+- [ ] 텍스트/이미지/스트리밍 응답 지원
+- [ ] AIService에서 AzureOpenAIProvider 우선순위/폴백 로직 검증
+- [ ] 단위/통합 테스트 작성
+
 ### 기타 유지보수 및 정리 작업
 - [ ] Weather, Counter 컴포넌트 파일 완전 삭제
 - [ ] Settings 페이지 Provider 변경 시 UI 동적 반영 개선 (Blazor 렌더링/바인딩 추가 조사 필요)
