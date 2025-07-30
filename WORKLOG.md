@@ -8,8 +8,8 @@
 ## 코파일럿, 요구사항 기반 전체 작업계획
 
 - [x] Home 페이지를 AI 인터페이스로 리팩터링 (입력창, 추천 프롬프트, 응답/이미지/채팅 히스토리/로딩/에러 처리)
-- [ ] Settings 페이지 신규 구현 및 보안 설정 관리 (필수/선택 필드, UX, 저장/배지/피드백/유효성검사)
-- [ ] 네비게이션 업데이트 (Counter/Weather 제거, Settings 추가, AI 브랜딩, 반응형 디자인)
+- [x] Settings 페이지 신규 구현 및 보안 설정 관리 (필수/선택 필드, UX, 저장/배지/피드백/유효성검사)
+- [x] 네비게이션 업데이트 (Counter/Weather 제거, Settings 추가, AI 브랜딩, 반응형 디자인)
 - [ ] NuGet 패키지 설치 및 버전 정렬 (Microsoft.Extensions.AI, Azure.AI.Inference, Azure.AI.OpenAI, ModelContextProtocol.Client, System.ClientModel)
 - [ ] AI 서비스 레이어 구현 (IAIService, AIService, MCP/Azure OpenAI/GitHub Models 통합, 이미지/텍스트 응답, 우선순위/폴백)
 - [ ] 설정 서비스 구현 (IConfigurationService, 보안 저장/조회, 환경별 지원, 최소 1개 AI Provider+Hugging Face 검증)
