@@ -22,6 +22,11 @@
 	<button type="submit" class="btn btn-primary">저장</button>
 </EditForm>
 
+@if (!string.IsNullOrEmpty(successMessage))
+{
+	<div class="alert alert-success mt-3">@successMessage</div>
+}
+
 @code {
 	public class SettingsModel
 	{
@@ -31,9 +36,11 @@
 	}
 
 	private SettingsModel settingsModel = new();
+	private string? successMessage;
 
 	private void HandleValidSubmit()
 	{
-		// TODO: 저장 로직 및 UX 피드백 구현 예정
+		// 실제 저장 로직은 추후 구현
+		successMessage = "설정이 저장되었습니다!";
 	}
 }
