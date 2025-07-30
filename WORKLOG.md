@@ -11,8 +11,8 @@
 - [x] Settings 페이지 신규 구현 및 보안 설정 관리 (필수/선택 필드, UX, 저장/배지/피드백/유효성검사)
 - [x] 네비게이션 업데이트 (Counter/Weather 제거, Settings 추가, AI 브랜딩, 반응형 디자인)
 - [x] NuGet 패키지 설치 및 버전 정렬 (Microsoft.Extensions.AI, Azure.AI.OpenAI, System.ClientModel)
-- [ ] Azure.AI.Inference 프리뷰 버전 설치 필요 (`--prerelease` 옵션)
-- [ ] ModelContextProtocol.Client 공식 명칭/버전 확인 및 설치 필요
+- [x] Azure.AI.Inference 프리뷰 버전 설치 완료
+- [x] ModelContextProtocol (공식 패키지, 프리뷰) 설치 완료
 - [ ] AI 서비스 레이어 구현 (IAIService, AIService, MCP/Azure OpenAI/GitHub Models 통합, 이미지/텍스트 응답, 우선순위/폴백)
 - [ ] 설정 서비스 구현 (IConfigurationService, 보안 저장/조회, 환경별 지원, 최소 1개 AI Provider+Hugging Face 검증)
 - [ ] Azure OpenAI 연동 (엔드포인트/API키 인증, 배포 기반 모델 호출, 에러 처리)
