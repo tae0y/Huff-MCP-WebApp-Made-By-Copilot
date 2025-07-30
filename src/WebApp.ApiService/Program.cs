@@ -15,6 +15,7 @@ builder.Services.AddSingleton<IAIProvider, AzureOpenAIProvider>();
 builder.Services.AddSingleton<IAIProvider, MCPProvider>();
 builder.Services.AddSingleton<IAIProvider, GitHubModelProvider>();
 builder.Services.AddSingleton<IAIService, AIService>();
+builder.Services.AddSingleton<IConfigurationService, ConfigurationService>();
 
 var app = builder.Build();
 
