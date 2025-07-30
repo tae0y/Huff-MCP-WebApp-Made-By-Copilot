@@ -47,9 +47,12 @@
 			{
 				// 사용자 메시지 추가
 				messages.Add(new AiMessage { Role = "user", Text = userPrompt });
-				// TODO: AI 서비스 호출 후 응답 메시지 추가
-				// 예시: AI가 텍스트와 이미지를 반환한다고 가정
-				messages.Add(new AiMessage { Role = "ai", Text = "AI 응답 예시입니다.", ImageUrl = "https://placekitten.com/320/200" });
+				// AI 서비스 호출 Stub
+				var aiResponse = GetAiResponseStub(userPrompt);
+				if (aiResponse != null)
+				{
+					messages.Add(aiResponse);
+				}
 				userPrompt = string.Empty;
 			}
 			catch (Exception ex)
@@ -60,6 +63,37 @@
 			{
 				isLoading = false;
 			}
+		}
+	}
+
+	// AI 서비스 호출 Stub (임시)
+	private AiMessage? GetAiResponseStub(string prompt)
+	{
+		// 프롬프트에 따라 임시 응답 반환
+		if (prompt.Contains("beaver", StringComparison.OrdinalIgnoreCase))
+		{
+			return new AiMessage
+			{
+				Role = "ai",
+				Text = "요청하신 비버 이미지입니다.",
+				ImageUrl = "https://placekitten.com/320/200" // 실제 구현 시 AI 이미지 URL로 대체
+			};
+		}
+		else if (prompt.Contains("who am I", StringComparison.OrdinalIgnoreCase))
+		{
+			return new AiMessage
+			{
+				Role = "ai",
+				Text = "당신은 이 AI 챗봇을 사용하는 사용자입니다!"
+			};
+		}
+		else
+		{
+			return new AiMessage
+			{
+				Role = "ai",
+				Text = $"'{prompt}'에 대한 AI 응답 예시입니다."
+			};
 		}
 	}
 }
