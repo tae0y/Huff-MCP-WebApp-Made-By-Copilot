@@ -1,8 +1,11 @@
 @page "/settings"
+@using System.ComponentModel.DataAnnotations
 
 <h1>Settings</h1>
 
 <EditForm Model="settingsModel" OnValidSubmit="HandleValidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
 	<div class="mb-3 d-flex align-items-center">
 		<label for="provider" class="form-label me-2">AI Provider</label>
 		<select id="provider" class="form-select me-2" style="width:180px;" @bind="settingsModel.Provider">
@@ -13,6 +16,7 @@
 		<span class="badge @(string.IsNullOrEmpty(settingsModel.Provider) ? "bg-danger" : "bg-success")">
 			@(string.IsNullOrEmpty(settingsModel.Provider) ? "미입력" : "입력됨")
 		</span>
+		<ValidationMessage For="@(() => settingsModel.Provider)" />
 	</div>
 	<div class="mb-3 d-flex align-items-center">
 		<label for="apiKey" class="form-label me-2">API Key</label>
@@ -20,6 +24,7 @@
 		<span class="badge @(string.IsNullOrEmpty(settingsModel.ApiKey) ? "bg-danger" : "bg-success")">
 			@(string.IsNullOrEmpty(settingsModel.ApiKey) ? "미입력" : "입력됨")
 		</span>
+		<ValidationMessage For="@(() => settingsModel.ApiKey)" />
 	</div>
 	<div class="mb-3 d-flex align-items-center">
 		<label for="endpoint" class="form-label me-2">Endpoint</label>
@@ -27,6 +32,7 @@
 		<span class="badge @(string.IsNullOrEmpty(settingsModel.Endpoint) ? "bg-danger" : "bg-success")">
 			@(string.IsNullOrEmpty(settingsModel.Endpoint) ? "미입력" : "입력됨")
 		</span>
+		<ValidationMessage For="@(() => settingsModel.Endpoint)" />
 	</div>
 	<button type="submit" class="btn btn-primary">저장</button>
 </EditForm>
@@ -46,8 +52,13 @@
 @code {
 	public class SettingsModel
 	{
+		[Required(ErrorMessage = "AI Provider는 필수입니다.")]
 		public string Provider { get; set; } = "AzureOpenAI";
+
+		[Required(ErrorMessage = "API Key는 필수입니다.")]
 		public string ApiKey { get; set; } = string.Empty;
+
+		[Required(ErrorMessage = "Endpoint는 필수입니다.")]
 		public string Endpoint { get; set; } = string.Empty;
 	}
 
