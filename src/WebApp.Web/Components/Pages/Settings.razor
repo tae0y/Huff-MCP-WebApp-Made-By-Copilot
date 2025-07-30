@@ -3,24 +3,40 @@
 <h1>Settings</h1>
 
 <EditForm Model="settingsModel" OnValidSubmit="HandleValidSubmit">
-	<div class="mb-3">
-		<label for="provider" class="form-label">AI Provider</label>
-		<select id="provider" class="form-select" @bind="settingsModel.Provider">
+	<div class="mb-3 d-flex align-items-center">
+		<label for="provider" class="form-label me-2">AI Provider</label>
+		<select id="provider" class="form-select me-2" style="width:180px;" @bind="settingsModel.Provider">
 			<option value="AzureOpenAI">Azure OpenAI</option>
 			<option value="HuggingFace">Hugging Face</option>
 			<option value="GitHub">GitHub</option>
 		</select>
+		<span class="badge @(string.IsNullOrEmpty(settingsModel.Provider) ? "bg-danger" : "bg-success")">
+			@(string.IsNullOrEmpty(settingsModel.Provider) ? "미입력" : "입력됨")
+		</span>
 	</div>
-	<div class="mb-3">
-		<label for="apiKey" class="form-label">API Key</label>
-		<input id="apiKey" type="text" class="form-control" @bind="settingsModel.ApiKey" />
+	<div class="mb-3 d-flex align-items-center">
+		<label for="apiKey" class="form-label me-2">API Key</label>
+		<input id="apiKey" type="text" class="form-control me-2" style="width:180px;" @bind="settingsModel.ApiKey" />
+		<span class="badge @(string.IsNullOrEmpty(settingsModel.ApiKey) ? "bg-danger" : "bg-success")">
+			@(string.IsNullOrEmpty(settingsModel.ApiKey) ? "미입력" : "입력됨")
+		</span>
 	</div>
-	<div class="mb-3">
-		<label for="endpoint" class="form-label">Endpoint</label>
-		<input id="endpoint" type="text" class="form-control" @bind="settingsModel.Endpoint" />
+	<div class="mb-3 d-flex align-items-center">
+		<label for="endpoint" class="form-label me-2">Endpoint</label>
+		<input id="endpoint" type="text" class="form-control me-2" style="width:180px;" @bind="settingsModel.Endpoint" />
+		<span class="badge @(string.IsNullOrEmpty(settingsModel.Endpoint) ? "bg-danger" : "bg-success")">
+			@(string.IsNullOrEmpty(settingsModel.Endpoint) ? "미입력" : "입력됨")
+		</span>
 	</div>
 	<button type="submit" class="btn btn-primary">저장</button>
 </EditForm>
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+	<div class="alert alert-success mt-3">@successMessage
+		<span class="badge bg-success ms-2">설정 완료</span>
+	</div>
+}
 
 @if (!string.IsNullOrEmpty(successMessage))
 {
