@@ -11,92 +11,10 @@
 	</div>
 	<div class="suggestion-section">
 		<span>추천 프롬프트:</span>
-	<button class="suggestion-btn" @onclick='() => SetPrompt("who am I")'>who am I</button>
-	<button class="suggestion-btn" @onclick='() => SetPrompt("create a pixelated image of a beaver")'>create a pixelated image of a beaver</button>
+		<button class="suggestion-btn" @onclick='() => SetPrompt("who am I")'>who am I</button>
+		<button class="suggestion-btn" @onclick='() => SetPrompt("create a pixelated image of a beaver")'>create a pixelated image of a beaver</button>
 	</div>
 </div>
-
-
-@code {
-	private string userPrompt = string.Empty;
-	private bool isLoading = false;
-	private string? errorMessage = null;
-
-	// 메시지 데이터 구조
-	public class AiMessage
-	{
-	public string? Role { get; set; } // "user" or "ai"
-		public string? Text { get; set; }
-		public string? ImageUrl { get; set; }
-	}
-
-	private List<AiMessage> messages = new();
-
-	private void SetPrompt(string prompt)
-	{
-		userPrompt = prompt;
-	}
-
-	private void SendPrompt()
-	{
-		if (!string.IsNullOrWhiteSpace(userPrompt))
-		{
-			errorMessage = null;
-			isLoading = true;
-			try
-			{
-				// 사용자 메시지 추가
-				messages.Add(new AiMessage { Role = "user", Text = userPrompt });
-				// AI 서비스 호출 Stub
-				var aiResponse = GetAiResponseStub(userPrompt);
-				if (aiResponse != null)
-				{
-					messages.Add(aiResponse);
-				}
-				userPrompt = string.Empty;
-			}
-			catch (Exception ex)
-			{
-				errorMessage = "AI 응답 처리 중 오류가 발생했습니다: " + ex.Message;
-			}
-			finally
-			{
-				isLoading = false;
-			}
-		}
-	}
-
-	// AI 서비스 호출 Stub (임시)
-	private AiMessage? GetAiResponseStub(string prompt)
-	{
-		// 프롬프트에 따라 임시 응답 반환
-		if (prompt.Contains("beaver", StringComparison.OrdinalIgnoreCase))
-		{
-			return new AiMessage
-			{
-				Role = "ai",
-				Text = "요청하신 비버 이미지입니다.",
-				ImageUrl = "https://placekitten.com/320/200" // 실제 구현 시 AI 이미지 URL로 대체
-			};
-		}
-		else if (prompt.Contains("who am I", StringComparison.OrdinalIgnoreCase))
-		{
-			return new AiMessage
-			{
-				Role = "ai",
-				Text = "당신은 이 AI 챗봇을 사용하는 사용자입니다!"
-			};
-		}
-		else
-		{
-			return new AiMessage
-			{
-				Role = "ai",
-				Text = $"'{prompt}'에 대한 AI 응답 예시입니다."
-			};
-		}
-	}
-}
 
 @if (isLoading)
 {
@@ -129,20 +47,140 @@
 		</div>
 	}
 </div>
+
 <style>
-.ai-chat-container {
-	max-width: 600px;
-	margin: 40px auto;
-	padding: 32px;
-	background: #fff;
-	border-radius: 16px;
-	box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-}
-.prompt-section {
-	display: flex;
-	gap: 8px;
-	margin-bottom: 16px;
-}
+	.ai-chat-container {
+		max-width: 600px;
+		margin: 40px auto;
+		padding: 32px;
+		background: #fff;
+		border-radius: 16px;
+		box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+	}
+	.prompt-section {
+		display: flex;
+		gap: 8px;
+		margin-bottom: 16px;
+	}
+	.prompt-input {
+		flex: 1;
+		padding: 8px 12px;
+		font-size: 1rem;
+		border-radius: 8px;
+		border: 1px solid #ccc;
+	}
+	.send-btn {
+		padding: 8px 16px;
+		border-radius: 8px;
+		background: #0078d4;
+		color: #fff;
+		border: none;
+		font-weight: bold;
+		cursor: pointer;
+	}
+	.suggestion-section {
+		margin-bottom: 8px;
+	}
+	.suggestion-btn {
+		margin: 0 4px;
+		padding: 6px 12px;
+		border-radius: 8px;
+		background: #e5e5e5;
+		border: none;
+		cursor: pointer;
+		font-size: 0.95rem;
+	}
+	.suggestion-btn:hover {
+		background: #d0e6ff;
+	}
+	.chat-history {
+		margin-top: 24px;
+	}
+	.chat-message {
+		display: flex;
+		align-items: flex-start;
+		gap: 12px;
+		margin-bottom: 18px;
+		padding: 12px 0;
+		border-bottom: 1px solid #f0f0f0;
+	}
+	.chat-message.user {
+		flex-direction: row-reverse;
+	}
+	.user-label {
+		font-weight: bold;
+		color: #0078d4;
+		min-width: 32px;
+	}
+	.ai-label {
+		font-weight: bold;
+		color: #444;
+		min-width: 32px;
+	}
+	.chat-text {
+		background: #f5f5f5;
+		padding: 8px 12px;
+		border-radius: 8px;
+		max-width: 340px;
+		word-break: break-word;
+	}
+	.chat-image {
+		max-width: 180px;
+		border-radius: 8px;
+		box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+	}
+	.loading-indicator {
+		margin: 16px 0;
+		color: #0078d4;
+		font-weight: bold;
+		text-align: center;
+	}
+	.error-message {
+		margin: 16px 0;
+		color: #d32f2f;
+		background: #fff0f0;
+		border-radius: 8px;
+		padding: 8px 12px;
+		text-align: center;
+		font-weight: bold;
+	}
+	/* 반응형 디자인 */
+	@media (max-width: 700px) {
+		.ai-chat-container {
+			max-width: 98vw;
+			padding: 12px;
+			margin: 12px auto;
+			border-radius: 8px;
+		}
+		.prompt-section {
+			flex-direction: column;
+			gap: 6px;
+		}
+		.send-btn {
+			width: 100%;
+			padding: 10px 0;
+			font-size: 1.1rem;
+		}
+		.suggestion-section {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+		}
+		.suggestion-btn {
+			width: 100%;
+			margin: 2px 0;
+			font-size: 1rem;
+		}
+		.chat-text {
+			max-width: 90vw;
+			font-size: 0.98rem;
+		}
+		.chat-image {
+			max-width: 98vw;
+			height: auto;
+		}
+	}
+</style>
 .prompt-input {
 	flex: 1;
 	padding: 8px 12px;
@@ -225,4 +263,40 @@
 	text-align: center;
 	font-weight: bold;
 }
-</style>
+
+/* 반응형 디자인 */
+@media (max-width: 700px) {
+	.ai-chat-container {
+		max-width: 98vw;
+		padding: 12px;
+		margin: 12px auto;
+		border-radius: 8px;
+	}
+	.prompt-section {
+		flex-direction: column;
+		gap: 6px;
+	}
+	.send-btn {
+		width: 100%;
+		padding: 10px 0;
+		font-size: 1.1rem;
+	}
+	.suggestion-section {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+	.suggestion-btn {
+		width: 100%;
+		margin: 2px 0;
+		font-size: 1rem;
+	}
+	.chat-text {
+		max-width: 90vw;
+		font-size: 0.98rem;
+	}
+	.chat-image {
+		max-width: 98vw;
+		height: auto;
+	}
+}
