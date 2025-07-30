@@ -7,7 +7,7 @@
 
 ## 코파일럿, 요구사항 기반 전체 작업계획
 
-- [ ] Home 페이지를 AI 인터페이스로 리팩터링 (입력창, 추천 프롬프트, 응답/이미지/채팅 히스토리/로딩/에러 처리)
+- [x] Home 페이지를 AI 인터페이스로 리팩터링 (입력창, 추천 프롬프트, 응답/이미지/채팅 히스토리/로딩/에러 처리)
 - [ ] Settings 페이지 신규 구현 및 보안 설정 관리 (필수/선택 필드, UX, 저장/배지/피드백/유효성검사)
 - [ ] 네비게이션 업데이트 (Counter/Weather 제거, Settings 추가, AI 브랜딩, 반응형 디자인)
 - [ ] NuGet 패키지 설치 및 버전 정렬 (Microsoft.Extensions.AI, Azure.AI.Inference, Azure.AI.OpenAI, ModelContextProtocol.Client, System.ClientModel)
@@ -23,7 +23,7 @@
 
 #### Home 페이지 AI 인터페이스 리팩터링 세부 작업계획
  - [x] 기존 Home.razor 파일 구조 및 코드 분석
-- [ ] Home.razor 내 Counter/Weather 관련 코드 및 UI 제거
+ - [x] Home.razor 내 Counter/Weather 관련 코드 및 UI 제거
  - [x] 사용자 프롬프트 입력창 및 추천 프롬프트 버튼 UI 추가
  - [x] AI 응답(텍스트/이미지) 표시 컴포넌트 설계 및 구현
  - [x] 채팅 히스토리 UI 및 데이터 구조 설계
