@@ -20,22 +20,50 @@
 		</span>
 		<ValidationMessage For="@(() => settingsModel.Provider)" />
 	</div>
-	<div class="mb-3 d-flex align-items-center">
-		<label for="apiKey" class="form-label me-2">API Key</label>
-		<input id="apiKey" type="text" class="form-control me-2" style="width:180px;" @bind="settingsModel.ApiKey" />
-		<span class="badge @(string.IsNullOrEmpty(settingsModel.ApiKey) ? "bg-danger" : "bg-success")">
-			@(string.IsNullOrEmpty(settingsModel.ApiKey) ? "미입력" : "입력됨")
-		</span>
-		<ValidationMessage For="@(() => settingsModel.ApiKey)" />
-	</div>
-	<div class="mb-3 d-flex align-items-center">
-		<label for="endpoint" class="form-label me-2">Endpoint</label>
-		<input id="endpoint" type="text" class="form-control me-2" style="width:180px;" @bind="settingsModel.Endpoint" />
-		<span class="badge @(string.IsNullOrEmpty(settingsModel.Endpoint) ? "bg-danger" : "bg-success")">
-			@(string.IsNullOrEmpty(settingsModel.Endpoint) ? "미입력" : "입력됨")
-		</span>
-		<ValidationMessage For="@(() => settingsModel.Endpoint)" />
-	</div>
+	@if (settingsModel.Provider == "AzureOpenAI")
+	{
+		<div class="mb-3 d-flex align-items-center">
+			<label for="apiKey" class="form-label me-2">API Key (Azure OpenAI)</label>
+			<input id="apiKey" type="text" class="form-control me-2" style="width:180px;" @bind="settingsModel.ApiKey" />
+			<span class="badge @(string.IsNullOrEmpty(settingsModel.ApiKey) ? "bg-danger" : "bg-success")">
+				@(string.IsNullOrEmpty(settingsModel.ApiKey) ? "미입력" : "입력됨")
+			</span>
+			<ValidationMessage For="@(() => settingsModel.ApiKey)" />
+		</div>
+		<div class="mb-3 d-flex align-items-center">
+			<label for="endpoint" class="form-label me-2">Endpoint (Azure OpenAI)</label>
+			<input id="endpoint" type="text" class="form-control me-2" style="width:180px;" @bind="settingsModel.Endpoint" />
+			<span class="badge @(string.IsNullOrEmpty(settingsModel.Endpoint) ? "bg-danger" : "bg-success")">
+				@(string.IsNullOrEmpty(settingsModel.Endpoint) ? "미입력" : "입력됨")
+			</span>
+			<ValidationMessage For="@(() => settingsModel.Endpoint)" />
+		</div>
+		<div class="mb-2 text-secondary small">Azure OpenAI를 사용하려면 엔드포인트와 API Key를 입력하세요.</div>
+	}
+	else if (settingsModel.Provider == "HuggingFace")
+	{
+		<div class="mb-3 d-flex align-items-center">
+			<label for="apiKey" class="form-label me-2">Access Token (Hugging Face)</label>
+			<input id="apiKey" type="text" class="form-control me-2" style="width:180px;" @bind="settingsModel.ApiKey" />
+			<span class="badge @(string.IsNullOrEmpty(settingsModel.ApiKey) ? "bg-danger" : "bg-success")">
+				@(string.IsNullOrEmpty(settingsModel.ApiKey) ? "미입력" : "입력됨")
+			</span>
+			<ValidationMessage For="@(() => settingsModel.ApiKey)" />
+		</div>
+		<div class="mb-2 text-secondary small">Hugging Face를 사용하려면 Access Token만 입력하면 됩니다.</div>
+	}
+	else if (settingsModel.Provider == "GitHub")
+	{
+		<div class="mb-3 d-flex align-items-center">
+			<label for="apiKey" class="form-label me-2">GitHub Token</label>
+			<input id="apiKey" type="text" class="form-control me-2" style="width:180px;" @bind="settingsModel.ApiKey" />
+			<span class="badge @(string.IsNullOrEmpty(settingsModel.ApiKey) ? "bg-danger" : "bg-success")">
+				@(string.IsNullOrEmpty(settingsModel.ApiKey) ? "미입력" : "입력됨")
+			</span>
+			<ValidationMessage For="@(() => settingsModel.ApiKey)" />
+		</div>
+		<div class="mb-2 text-secondary small">GitHub 기반 모델을 사용하려면 Personal Access Token을 입력하세요.</div>
+	}
 	<button type="submit" class="btn btn-primary">저장</button>
 </EditForm>
 
