@@ -1,3 +1,5 @@
+using WebApp.ApiService.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire client integrations.
@@ -8,6 +10,11 @@ builder.Services.AddProblemDetails();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+// AI 서비스 DI 등록
+builder.Services.AddSingleton<IAIProvider, AzureOpenAIProvider>();
+builder.Services.AddSingleton<IAIProvider, MCPProvider>();
+builder.Services.AddSingleton<IAIProvider, GitHubModelProvider>();
+builder.Services.AddSingleton<IAIService, AIService>();
 
 var app = builder.Build();
 

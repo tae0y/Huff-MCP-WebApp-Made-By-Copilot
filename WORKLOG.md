@@ -13,7 +13,7 @@
 - [x] NuGet 패키지 설치 및 버전 정렬 (Microsoft.Extensions.AI, Azure.AI.OpenAI, System.ClientModel)
 - [x] Azure.AI.Inference 프리뷰 버전 설치 완료
 - [x] ModelContextProtocol (공식 패키지, 프리뷰) 설치 완료
-- [ ] AI 서비스 레이어 구현 (IAIService, AIService, MCP/Azure OpenAI/GitHub Models 통합, 이미지/텍스트 응답, 우선순위/폴백)
+- [x] AI 서비스 레이어 구현 (IAIService, AIService, MCP/Azure OpenAI/GitHub Models 통합, 이미지/텍스트 응답, 우선순위/폴백)
 - [ ] 설정 서비스 구현 (IConfigurationService, 보안 저장/조회, 환경별 지원, 최소 1개 AI Provider+Hugging Face 검증)
 - [ ] Azure OpenAI 연동 (엔드포인트/API키 인증, 배포 기반 모델 호출, 에러 처리)
 - [ ] MCP 연동 (클라이언트 초기화, 툴 탐색/호출, 에러/재시도 처리)
