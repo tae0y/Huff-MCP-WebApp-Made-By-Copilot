@@ -1,5 +1,7 @@
 @page "/settings"
 @using System.ComponentModel.DataAnnotations
+@using WebApp.Web.Models
+@inject WebApp.Web.Services.IConfigurationService ConfigService
 
 <h1>Settings</h1>
 
@@ -50,24 +52,21 @@
 }
 
 @code {
-	public class SettingsModel
-	{
-		[Required(ErrorMessage = "AI Provider는 필수입니다.")]
-		public string Provider { get; set; } = "AzureOpenAI";
+    private SettingsModel settingsModel = new();
+    private string? successMessage;
 
-		[Required(ErrorMessage = "API Key는 필수입니다.")]
-		public string ApiKey { get; set; } = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        var loaded = await ConfigService.LoadSettingsAsync();
+        if (loaded != null)
+        {
+            settingsModel = loaded;
+        }
+    }
 
-		[Required(ErrorMessage = "Endpoint는 필수입니다.")]
-		public string Endpoint { get; set; } = string.Empty;
-	}
-
-	private SettingsModel settingsModel = new();
-	private string? successMessage;
-
-	private void HandleValidSubmit()
-	{
-		// 실제 저장 로직은 추후 구현
-		successMessage = "설정이 저장되었습니다!";
-	}
+    private async Task HandleValidSubmit()
+    {
+        await ConfigService.SaveSettingsAsync(settingsModel);
+        successMessage = "설정이 저장되었습니다!";
+    }
 }
