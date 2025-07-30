@@ -1,5 +1,4 @@
 @page "/settings"
-@using System.ComponentModel.DataAnnotations
 @using WebApp.Web.Models
 @inject WebApp.Web.Services.IConfigurationService ConfigService
 
@@ -64,7 +63,9 @@
 		</div>
 		<div class="mb-2 text-secondary small">GitHub 기반 모델을 사용하려면 Personal Access Token을 입력하세요.</div>
 	}
-	<button type="submit" class="btn btn-primary">저장</button>
+	<button type="submit" class="btn btn-primary me-2">저장</button>
+	<button type="button" class="btn btn-outline-secondary me-2" @onclick="QuickFill">빠른설정</button>
+	<button type="button" class="btn btn-outline-danger" @onclick="ResetSettings">초기화</button>
 </EditForm>
 
 @if (!string.IsNullOrEmpty(successMessage))
@@ -80,21 +81,47 @@
 }
 
 @code {
-    private SettingsModel settingsModel = new();
-    private string? successMessage;
+	private SettingsModel settingsModel = new();
+	private string? successMessage;
 
-    protected override async Task OnInitializedAsync()
-    {
-        var loaded = await ConfigService.LoadSettingsAsync();
-        if (loaded != null)
-        {
-            settingsModel = loaded;
-        }
-    }
+	protected override async Task OnInitializedAsync()
+	{
+		var loaded = await ConfigService.LoadSettingsAsync();
+		if (loaded != null)
+		{
+			settingsModel = loaded;
+		}
+	}
 
-    private async Task HandleValidSubmit()
-    {
-        await ConfigService.SaveSettingsAsync(settingsModel);
-        successMessage = "설정이 저장되었습니다!";
-    }
+	private async Task HandleValidSubmit()
+	{
+		await ConfigService.SaveSettingsAsync(settingsModel);
+		successMessage = "설정이 저장되었습니다!";
+	}
+
+	private void QuickFill()
+	{
+		switch (settingsModel.Provider)
+		{
+			case "AzureOpenAI":
+				settingsModel.ApiKey = "sample-azure-api-key";
+				settingsModel.Endpoint = "https://sample.openai.azure.com/";
+				break;
+			case "HuggingFace":
+				settingsModel.ApiKey = "sample-hf-token";
+				settingsModel.Endpoint = string.Empty;
+				break;
+			case "GitHub":
+				settingsModel.ApiKey = "ghp_samplegithubtoken";
+				settingsModel.Endpoint = string.Empty;
+				break;
+		}
+		successMessage = "빠른설정 값이 입력되었습니다.";
+	}
+
+	private void ResetSettings()
+	{
+		settingsModel = new SettingsModel();
+		successMessage = "설정이 초기화되었습니다.";
+	}
 }
