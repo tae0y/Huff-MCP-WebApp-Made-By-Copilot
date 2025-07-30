@@ -9,7 +9,7 @@
 	<ValidationSummary />
 	<div class="mb-3 d-flex align-items-center">
 		<label for="provider" class="form-label me-2">AI Provider</label>
-		<select id="provider" class="form-select me-2" style="width:180px;" @bind="settingsModel.Provider">
+	<select id="provider" class="form-select me-2" style="width:180px;" @bind-Value="settingsModel.Provider" @bind-Value:event="onchange">
 			<option value="AzureOpenAI">Azure OpenAI</option>
 			<option value="HuggingFace">Hugging Face</option>
 			<option value="GitHub">GitHub</option>
@@ -99,6 +99,7 @@
 		successMessage = "설정이 저장되었습니다!";
 	}
 
+
 	private void QuickFill()
 	{
 		switch (settingsModel.Provider)
@@ -117,11 +118,13 @@
 				break;
 		}
 		successMessage = "빠른설정 값이 입력되었습니다.";
+		StateHasChanged();
 	}
 
 	private void ResetSettings()
 	{
 		settingsModel = new SettingsModel();
 		successMessage = "설정이 초기화되었습니다.";
+		StateHasChanged();
 	}
 }

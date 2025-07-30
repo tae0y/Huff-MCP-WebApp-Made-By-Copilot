@@ -44,3 +44,4 @@
 
 ### 기타 유지보수 및 정리 작업
 - [ ] Weather, Counter 컴포넌트 파일 완전 삭제
+- [ ] Settings 페이지 Provider 변경 시 UI 동적 반영 개선 (Blazor 렌더링/바인딩 추가 조사 필요)
