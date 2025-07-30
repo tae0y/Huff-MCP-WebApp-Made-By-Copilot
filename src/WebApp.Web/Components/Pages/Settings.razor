@@ -2,6 +2,38 @@
 
 <h1>Settings</h1>
 
-<p>여기서 AI 및 보안 관련 설정을 관리할 수 있습니다.</p>
+<EditForm Model="settingsModel" OnValidSubmit="HandleValidSubmit">
+	<div class="mb-3">
+		<label for="provider" class="form-label">AI Provider</label>
+		<select id="provider" class="form-select" @bind="settingsModel.Provider">
+			<option value="AzureOpenAI">Azure OpenAI</option>
+			<option value="HuggingFace">Hugging Face</option>
+			<option value="GitHub">GitHub</option>
+		</select>
+	</div>
+	<div class="mb-3">
+		<label for="apiKey" class="form-label">API Key</label>
+		<input id="apiKey" type="text" class="form-control" @bind="settingsModel.ApiKey" />
+	</div>
+	<div class="mb-3">
+		<label for="endpoint" class="form-label">Endpoint</label>
+		<input id="endpoint" type="text" class="form-control" @bind="settingsModel.Endpoint" />
+	</div>
+	<button type="submit" class="btn btn-primary">저장</button>
+</EditForm>
 
-<!-- TODO: 필수/선택 필드, UX, 저장/배지/피드백/유효성검사 등 구현 예정 -->
+@code {
+	public class SettingsModel
+	{
+		public string Provider { get; set; } = "AzureOpenAI";
+		public string ApiKey { get; set; } = string.Empty;
+		public string Endpoint { get; set; } = string.Empty;
+	}
+
+	private SettingsModel settingsModel = new();
+
+	private void HandleValidSubmit()
+	{
+		// TODO: 저장 로직 및 UX 피드백 구현 예정
+	}
+}
