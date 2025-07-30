@@ -1,7 +1,78 @@
-﻿@page "/"
+﻿
+@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>AI Chat</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="ai-chat-container">
+	<h2>AI 이미지 & 텍스트 생성</h2>
+	<div class="prompt-section">
+		<input type="text" class="prompt-input" @bind="userPrompt" placeholder="프롬프트를 입력하세요..." />
+		<button class="send-btn" @onclick="SendPrompt">전송</button>
+	</div>
+	<div class="suggestion-section">
+		<span>추천 프롬프트:</span>
+	<button class="suggestion-btn" @onclick='() => SetPrompt("who am I")'>who am I</button>
+	<button class="suggestion-btn" @onclick='() => SetPrompt("create a pixelated image of a beaver")'>create a pixelated image of a beaver</button>
+	</div>
+</div>
 
-Welcome to your new app.
+@code {
+	private string userPrompt = string.Empty;
+
+	private void SetPrompt(string prompt)
+	{
+		userPrompt = prompt;
+	}
+
+	private void SendPrompt()
+	{
+		// TODO: AI 서비스 호출 연결 예정
+	}
+}
+
+<style>
+.ai-chat-container {
+	max-width: 600px;
+	margin: 40px auto;
+	padding: 32px;
+	background: #fff;
+	border-radius: 16px;
+	box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.prompt-section {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 16px;
+}
+.prompt-input {
+	flex: 1;
+	padding: 8px 12px;
+	font-size: 1rem;
+	border-radius: 8px;
+	border: 1px solid #ccc;
+}
+.send-btn {
+	padding: 8px 16px;
+	border-radius: 8px;
+	background: #0078d4;
+	color: #fff;
+	border: none;
+	font-weight: bold;
+	cursor: pointer;
+}
+.suggestion-section {
+	margin-bottom: 8px;
+}
+.suggestion-btn {
+	margin: 0 4px;
+	padding: 6px 12px;
+	border-radius: 8px;
+	background: #e5e5e5;
+	border: none;
+	cursor: pointer;
+	font-size: 0.95rem;
+}
+.suggestion-btn:hover {
+	background: #d0e6ff;
+}
+</style>
