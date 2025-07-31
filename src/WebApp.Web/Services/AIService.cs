@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
-using ModelContextProtocol;
+using System.Net.ServerSentEvents;
+using System.Text.Json;
 using System.Net.Http;
 
 namespace WebApp.Web.Services
@@ -16,45 +17,34 @@ namespace WebApp.Web.Services
             _configService = configService;
         }
 
-        private async Task<McpClient?> CreateMcpClientAsync()
+        private async Task<ServerSentEventsClient> CreateSseClientAsync()
         {
             _settings ??= await _configService.LoadSettingsAsync();
-            if (string.IsNullOrWhiteSpace(_settings.HuggingFaceToken)) return null;
-            var hfHeaders = new Dictionary<string, string>
-            {
-                { "Authorization", $"Bearer {_settings.HuggingFaceToken}" }
-            };
-            var clientTransport = new SseClientTransport(new()
-            {
-                Name = "HF Server",
-                Endpoint = new Uri(_settings.McpServerEndpoint ?? "https://huggingface.co/mcp"),
-                AdditionalHeaders = hfHeaders
-            });
-            return await McpClientFactory.CreateAsync(clientTransport);
+            if (string.IsNullOrWhiteSpace(_settings.HuggingFaceToken))
+                throw new InvalidOperationException("Hugging Face Token이 필요합니다.");
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_settings.HuggingFaceToken}");
+            var endpoint = _settings.McpServerEndpoint ?? "https://huggingface.co/mcp";
+            return new ServerSentEventsClient(new Uri(endpoint), httpClient);
         }
 
         public async Task<AIResponse> SendPromptAsync(string prompt)
         {
             try
             {
-                await using var mcpClient = await CreateMcpClientAsync();
-                if (mcpClient == null)
+                var sseClient = await CreateSseClientAsync();
+                var requestData = new { prompt = prompt, model = _settings?.ModelName };
+                var content = new StringContent(JsonSerializer.Serialize(requestData), System.Text.Encoding.UTF8, "application/json");
+                string resultText = "";
+                await foreach (var evt in sseClient.GetEventsAsync(content))
                 {
-                    return new AIResponse { IsError = true, ErrorMessage = "Hugging Face Token이 필요합니다." };
+                    if (!string.IsNullOrWhiteSpace(evt.Data))
+                        resultText += evt.Data;
                 }
-                var tools = await mcpClient.ListToolsAsync();
-                var chatOptions = new ChatOptions
-                {
-                    Tools = [.. tools],
-                    ModelId = _settings?.ModelName ?? "gpt-4.1-mini"
-                };
-                var result = await mcpClient.GetResponseAsync(prompt, chatOptions);
-                // 이미지 URL 추출(예시: markdown, http/https)
-                var imageUrls = ExtractImageUrls(result);
                 return new AIResponse
                 {
-                    Text = result,
-                    ImageUrls = imageUrls,
+                    Text = resultText,
+                    ImageUrls = ExtractImageUrls(resultText),
                     IsError = false
                 };
             }
@@ -66,22 +56,10 @@ namespace WebApp.Web.Services
 
         public async Task<List<string>> GetMcpToolsAsync()
         {
-            try
-            {
-                await using var mcpClient = await CreateMcpClientAsync();
-                if (mcpClient == null) return new List<string>();
-                var tools = await mcpClient.ListToolsAsync();
-                var toolNames = new List<string>();
-                foreach (var tool in tools)
-                {
-                    toolNames.Add(tool.Name);
-                }
-                return toolNames;
-            }
-            catch
-            {
-                return new List<string>();
-            }
+            // MCP 서버에서 툴 목록을 가져오는 API가 별도로 제공되는 경우에만 구현
+            // 현재는 빈 목록 반환
+            await Task.Delay(100);
+            return new List<string>();
         }
 
         private List<string> ExtractImageUrls(string response)
