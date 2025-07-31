@@ -6,6 +6,9 @@
 | T2 | Settings.razor: 토큰/엔드포인트 입력, 저장/상태 배지, UX/보안, User Secrets/암호화 적용 | 사용자가 안전하게 설정 입력/저장, 상태 확인, 보안/UX 만족 | T1 | TODO |
 | T3 | NavMenu.razor: Counter/Weather 제거, Settings 추가, AI 브랜딩, 반응형 네비게이션 | 네비게이션에서 불필요 페이지 제거, Settings 추가, AI 중심 UX | T1 | TODO |
 | T4 | IAIService/AIService: MCP/Azure/GitHub Provider 통합, 이미지/텍스트 응답, 우선순위/재시도/오류 처리 | 다양한 Provider 지원, 이미지/텍스트 응답, 오류/재시도/우선순위 처리 | T1, T2 | TODO |
+| T4-1 | IAIService 인터페이스 정의 | Home.razor에서 참조 가능한 기본 인터페이스 제공 | T4 | TODO |
+| T4-2 | AIService 기본 클래스 구현 | 프롬프트 입력 시 더미 응답 반환(실제 Provider 연동 전) | T4-1 | TODO |
+| T4-3 | DI 등록 (Program.cs 등) | Home.razor에서 AIService를 DI로 주입 가능 | T4-2 | TODO |
 | T5 | IConfigurationService: 안전한 설정 저장/로드, 환경별 처리, 입력 검증/암호화 | 설정이 안전하게 저장/로드, 환경별 동작, 입력 검증/암호화 | T2 | TODO |
 | T6 | NuGet 패키지 설치 및 버전 정렬 (Microsoft.Extensions.AI, Azure.AI.Inference, ModelContextProtocol.Client 등) | 모든 기능에 필요한 패키지 설치 및 버전 호환 | T1-T5 | TODO |
 | T7 | 단위/통합/UI 테스트: 주요 기능, Provider, 설정, 오류/에러/보안/UX 테스트 | 모든 요구사항에 대한 테스트 케이스 통과 | T1-T6 | TODO |
