@@ -7,6 +7,9 @@
 | T2-1 | Settings.razor 페이지 생성 | 기본 입력 폼, 상태 배지, UX/보안 구조 구현 | T2 | DONE |
 | T2-2 | SettingsModel 클래스 정의 | 폼 바인딩 및 검증용 모델 클래스 제공 | T2-1 | DONE |
 | T3 | NavMenu.razor: Counter/Weather 제거, Settings 추가, AI 브랜딩, 반응형 네비게이션 | 네비게이션에서 불필요 페이지 제거, Settings 추가, AI 중심 UX | T1 | TODO |
+| T3-1 | Counter/Weather 메뉴 및 페이지 제거 | 불필요한 메뉴/페이지 삭제 | T3 | TODO |
+| T3-2 | Settings 메뉴 추가 및 링크 연결 | 설정 페이지로 이동 가능 | T3-1 | TODO |
+| T3-3 | AI 브랜딩 및 반응형 UX 개선 | 네비게이션에 AI 테마 적용, 모바일 대응 | T3-2 | TODO |
 | T4 | IAIService/AIService: MCP/Azure/GitHub Provider 통합, 이미지/텍스트 응답, 우선순위/재시도/오류 처리 | 다양한 Provider 지원, 이미지/텍스트 응답, 오류/재시도/우선순위 처리 | T1, T2 | TODO |
 | T4-1 | IAIService 인터페이스 정의 | Home.razor에서 참조 가능한 기본 인터페이스 제공 | T4 | DONE |
 | T4-2 | AIService 기본 클래스 구현 | 프롬프트 입력 시 더미 응답 반환(실제 Provider 연동 전) | T4-1 | DONE |
