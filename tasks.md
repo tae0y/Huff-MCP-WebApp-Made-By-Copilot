@@ -2,12 +2,14 @@
 
 | Task ID | Description | Expected Outcome | Dependencies | Status |
 |--------|-------------|------------------|--------------|--------|
-| T1 | Weather.razor UI 개선 및 버튼/로딩/에러 표시 구현 | 사용자가 날씨 조회, 로딩/에러 상태 확인 가능 | requirements.md, design.md | TODO |
-| T2 | WeatherApiClient API 통신/오류/재시도 로직 구현 | API로부터 날씨 데이터 정상 수신 및 오류 처리 | T1 | TODO |
-| T3 | ApiService RESTful 엔드포인트 구현 및 테스트 | 실시간 날씨 데이터 제공 | T2 | TODO |
-| T4 | 유닛 테스트 작성 (WeatherApiClient, Weather.razor, ApiService) | 주요 기능별 단위 테스트 통과 | T1, T2, T3 | TODO |
-| T5 | 환경설정(appsettings.json) 및 서비스 확장 | 환경별 설정 및 공통 서비스 적용 | T1, T2, T3 | TODO |
-| T6 | 문서화 및 인수인계 자료 정리 | 최신 요구/설계/테스트/사용법 문서화 | 전체 | TODO |
+| T1 | Home.razor: AI 인터페이스, 프롬프트 입력, 추천 버튼, 응답(이미지/텍스트), 대화 히스토리, MCP 툴 패널, 로딩/에러 UI 구현 | 사용자가 프롬프트 입력 및 추천 버튼으로 AI 응답(이미지/텍스트) 수신, 대화 기록, 툴 패널, UX 개선 | requirements.md, design.md | TODO |
+| T2 | Settings.razor: 토큰/엔드포인트 입력, 저장/상태 배지, UX/보안, User Secrets/암호화 적용 | 사용자가 안전하게 설정 입력/저장, 상태 확인, 보안/UX 만족 | T1 | TODO |
+| T3 | NavMenu.razor: Counter/Weather 제거, Settings 추가, AI 브랜딩, 반응형 네비게이션 | 네비게이션에서 불필요 페이지 제거, Settings 추가, AI 중심 UX | T1 | TODO |
+| T4 | IAIService/AIService: MCP/Azure/GitHub Provider 통합, 이미지/텍스트 응답, 우선순위/재시도/오류 처리 | 다양한 Provider 지원, 이미지/텍스트 응답, 오류/재시도/우선순위 처리 | T1, T2 | TODO |
+| T5 | IConfigurationService: 안전한 설정 저장/로드, 환경별 처리, 입력 검증/암호화 | 설정이 안전하게 저장/로드, 환경별 동작, 입력 검증/암호화 | T2 | TODO |
+| T6 | NuGet 패키지 설치 및 버전 정렬 (Microsoft.Extensions.AI, Azure.AI.Inference, ModelContextProtocol.Client 등) | 모든 기능에 필요한 패키지 설치 및 버전 호환 | T1-T5 | TODO |
+| T7 | 단위/통합/UI 테스트: 주요 기능, Provider, 설정, 오류/에러/보안/UX 테스트 | 모든 요구사항에 대한 테스트 케이스 통과 | T1-T6 | TODO |
+| T8 | 문서화 및 인수인계 자료 정리: 요구/설계/테스트/사용법 최신화 | 최신 문서화 및 인수인계 자료 제공 | 전체 | TODO |
 
 ---
 
