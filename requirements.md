@@ -1,22 +1,31 @@
 # 요구사항 명세 (EARS Notation)
 
 ## Ubiquitous Requirements
-- THE SYSTEM SHALL 제공된 사용자 인터페이스를 통해 날씨 정보를 조회할 수 있어야 한다.
-- THE SYSTEM SHALL API 서비스와 통신하여 실시간 데이터를 받아와야 한다.
-- THE SYSTEM SHALL 오류 발생 시 사용자에게 명확한 에러 메시지를 표시해야 한다.
+- THE SYSTEM SHALL Blazor 웹앱에서 Hugging Face MCP 서버와 통합된 AI 이미지 생성 및 텍스트 응답 기능을 제공해야 한다.
+- THE SYSTEM SHALL Home 페이지에서 사용자 프롬프트 입력, 추천 프롬프트 버튼, AI 응답(이미지/텍스트) 표시, 대화 히스토리, 로딩/에러 상태를 지원해야 한다.
+- THE SYSTEM SHALL Settings 페이지에서 Hugging Face, GitHub Models, Azure OpenAI 설정을 안전하게 관리해야 한다.
+- THE SYSTEM SHALL 모든 민감 정보(토큰 등)를 안전하게 저장하고, 앱 재시작 후에도 설정을 유지해야 한다.
+- THE SYSTEM SHALL Counter 및 Weather 페이지를 제거하고, Settings 페이지를 네비게이션에 추가해야 한다.
+- THE SYSTEM SHALL 데스크톱/모바일 모두에서 반응형 디자인을 지원해야 한다.
 
 ## Event-driven Requirements
-- WHEN 사용자가 날씨 조회 버튼을 클릭하면, THE SYSTEM SHALL 지정된 도시의 최신 날씨 정보를 표시해야 한다.
-- WHEN API 서비스가 응답하지 않으면, THE SYSTEM SHALL 사용자에게 네트워크 오류 메시지를 표시해야 한다.
+- WHEN 사용자가 프롬프트를 입력하거나 추천 버튼을 클릭하면, THE SYSTEM SHALL AI 응답(이미지/텍스트)을 받아서 표시해야 한다.
+- WHEN AI 응답이 이미지일 경우, THE SYSTEM SHALL 이미지를 적절히 표시하고 다운로드/복사 기능을 제공해야 한다.
+- WHEN AI 응답이 텍스트일 경우, THE SYSTEM SHALL 마크다운 형식으로 렌더링해야 한다.
+- WHEN 설정이 저장되면, THE SYSTEM SHALL 저장 성공 메시지와 각 서비스별 상태 배지를 표시해야 한다.
+- WHEN 네트워크 오류, 잘못된 토큰, Rate Limit 등 에러 발생 시, THE SYSTEM SHALL 사용자에게 명확한 에러 메시지를 표시해야 한다.
 
 ## State-driven Requirements
-- WHILE 데이터가 로딩 중일 때, THE SYSTEM SHALL 로딩 인디케이터를 표시해야 한다.
+- WHILE AI 응답을 기다리는 중에는, THE SYSTEM SHALL 로딩 인디케이터를 표시해야 한다.
+- WHILE MCP 서버가 설정된 경우, THE SYSTEM SHALL MCP 툴 패널을 접을 수 있도록 표시해야 한다.
 
 ## Unwanted behavior Requirements
-- IF API 응답이 실패하면, THE SYSTEM SHALL 재시도 옵션을 제공해야 한다.
+- IF AI Provider가 하나도 설정되지 않은 경우, THEN THE SYSTEM SHALL "No configured AI provider available for chat" 오류를 방지하고, 설정 안내 메시지를 표시해야 한다.
+- IF 이미지 로딩 실패, 잘못된 응답 등 발생 시, THEN THE SYSTEM SHALL 사용자에게 재시도 옵션과 에러 메시지를 제공해야 한다.
 
 ## Optional Requirements
-- WHERE 사용자가 고급 설정을 활성화한 경우, THE SYSTEM SHALL 추가적인 날씨 상세 정보를 표시해야 한다.
+- WHERE 사용자가 Azure OpenAI와 GitHub Models를 모두 설정한 경우, THE SYSTEM SHALL Azure OpenAI를 우선 사용하고, Fallback으로 GitHub Models를 사용해야 한다.
+- WHERE 사용자가 MCP 서버 엔드포인트를 변경한 경우, THE SYSTEM SHALL 해당 엔드포인트로 MCP 클라이언트를 초기화해야 한다.
 
 ---
 
@@ -24,13 +33,16 @@
 - [x] Testable: 모든 요구사항은 테스트 케이스로 검증 가능
 - [x] Unambiguous: 단일 해석만 가능
 - [x] Necessary: 시스템 목적에 부합
-- [x] Feasible: 현재 기술/구조로 실현 가능
+- [x] Feasible: .NET Aspire 및 샘플 코드로 실현 가능
 - [x] Traceable: 사용자 니즈 및 설계 요소와 연결됨
 
 ## 요구사항-컴포넌트 매핑
-- WebApp.Web/Components/Weather.razor: 날씨 정보 UI, 조회 버튼, 에러/로딩 표시
-- WebApp.Web/WeatherApiClient.cs: API 통신, 오류 처리, 재시도 로직
-- WebApp.ApiService: 실시간 데이터 제공
+- Home.razor: AI 인터페이스, 프롬프트 입력, 추천 버튼, 응답 표시, 대화 히스토리, 로딩/에러
+- Settings.razor: 토큰/엔드포인트 입력, 저장/상태 표시, UX/보안
+- NavMenu.razor: 네비게이션 구조, Settings 추가, AI 브랜딩
+- IAIService/AIService: AI Provider 통합, MCP/Azure/GitHub 모델 지원
+- IConfigurationService: 안전한 설정 저장/로드, 환경별 처리
+- MCP/Azure/GitHub 클라이언트: 각 Provider별 통합 및 오류 처리
 
 ---
 
