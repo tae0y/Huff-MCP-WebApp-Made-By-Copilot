@@ -7,9 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 // Add services to the container.
-
-builder.Services.AddDataProtection();
-builder.Services.AddScoped<WebApp.Web.Services.IConfigurationService, WebApp.Web.Services.ConfigurationService>();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
