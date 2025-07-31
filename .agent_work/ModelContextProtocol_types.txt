@@ -1,0 +1,4 @@
+ModelContextProtocol.Server.McpServerHandlers
+Microsoft.Extensions.DependencyInjection.IMcpServerBuilder
+Microsoft.Extensions.DependencyInjection.McpServerBuilderExtensions
+Microsoft.Extensions.DependencyInjection.McpServerServiceCollectionExtensions
