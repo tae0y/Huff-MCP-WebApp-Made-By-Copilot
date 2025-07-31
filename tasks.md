@@ -14,6 +14,9 @@
 | T4-1 | IAIService 인터페이스 정의 | Home.razor에서 참조 가능한 기본 인터페이스 제공 | T4 | DONE |
 | T4-2 | AIService 기본 클래스 구현 | 프롬프트 입력 시 더미 응답 반환(실제 Provider 연동 전) | T4-1 | DONE |
 | T4-3 | DI 등록 (Program.cs 등) | Home.razor에서 AIService를 DI로 주입 가능 | T4-2 | DONE |
+| T4-4 | AIService: Hugging Face MCP 클라이언트 연동 | 프롬프트 입력 시 MCP 서버로 요청/응답 | T4-3 | TODO |
+| T4-5 | AIService: GitHub Models 연동 및 Fallback | MCP 실패 시 GitHub Models로 요청/응답 | T4-4 | TODO |
+| T4-6 | Settings: MCP/GitHub 설정값만 사용 | 두 Provider만 입력/저장/상태 표시 | T2 | TODO |
 | T5 | IConfigurationService: 안전한 설정 저장/로드, 환경별 처리, 입력 검증/암호화 | 설정이 안전하게 저장/로드, 환경별 동작, 입력 검증/암호화 | T2 | TODO |
 | T6 | NuGet 패키지 설치 및 버전 정렬 (Microsoft.Extensions.AI, Azure.AI.Inference, ModelContextProtocol.Client 등) | 모든 기능에 필요한 패키지 설치 및 버전 호환 | T1-T5 | TODO |
 | T7 | 단위/통합/UI 테스트: 주요 기능, Provider, 설정, 오류/에러/보안/UX 테스트 | 모든 요구사항에 대한 테스트 케이스 통과 | T1-T6 | TODO |
