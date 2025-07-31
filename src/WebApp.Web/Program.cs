@@ -7,8 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 // Add services to the container.
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// AIService DI 등록
+builder.Services.AddScoped<WebApp.Web.Services.IAIService, WebApp.Web.Services.AIService>();
 
 builder.Services.AddOutputCache();
 
