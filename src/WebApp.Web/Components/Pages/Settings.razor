@@ -1,3 +1,4 @@
+@inject WebApp.Web.Services.IConfigurationService ConfigService
 
 @page "/settings"
 @using System.ComponentModel.DataAnnotations
@@ -69,15 +70,30 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // TODO: IConfigurationService에서 설정 불러오기
         saveSuccess = false;
         saveError = null;
+        try
+        {
+            settings = await ConfigService.LoadSettingsAsync();
+        }
+        catch (Exception ex)
+        {
+            saveError = $"설정 불러오기 오류: {ex.Message}";
+        }
     }
 
     private async Task SaveSettings()
     {
-        // TODO: IConfigurationService로 설정 저장
-        saveSuccess = true;
-        saveError = null;
+        try
+        {
+            await ConfigService.SaveSettingsAsync(settings);
+            saveSuccess = true;
+            saveError = null;
+        }
+        catch (Exception ex)
+        {
+            saveSuccess = false;
+            saveError = $"설정 저장 오류: {ex.Message}";
+        }
     }
 }

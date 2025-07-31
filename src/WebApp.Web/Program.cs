@@ -1,5 +1,6 @@
 using WebApp.Web;
 using WebApp.Web.Components;
+using WebApp.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,9 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 // AIService DI 등록
-builder.Services.AddScoped<WebApp.Web.Services.IAIService, WebApp.Web.Services.AIService>();
+builder.Services.AddScoped<IAIService, AIService>();
+// ConfigurationService DI 등록
+builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 
 builder.Services.AddOutputCache();
 
