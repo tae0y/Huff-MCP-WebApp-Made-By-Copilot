@@ -1,0 +1,82 @@
+
+@page "/settings"
+@using System.ComponentModel.DataAnnotations
+@using WebApp.Web.Services
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components
+
+<PageTitle>Settings</PageTitle>
+
+<h1>AI 서비스 설정</h1>
+
+<EditForm Model="settings" OnValidSubmit="SaveSettings">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="mb-3">
+        <label>Hugging Face Access Token <span class="badge bg-warning">Required</span></label>
+        <InputText type="password" class="form-control" @bind-Value="settings.HuggingFaceToken" required />
+    </div>
+    <div class="mb-3">
+        <label>Model Name</label>
+        <InputText class="form-control" @bind-Value="settings.ModelName" />
+    </div>
+    <div class="mb-3">
+        <label>GitHub Model Access Token</label>
+        <InputText type="password" class="form-control" @bind-Value="settings.GitHubModelToken" />
+    </div>
+    <div class="mb-3">
+        <label>Azure OpenAI Endpoint</label>
+        <InputText class="form-control" @bind-Value="settings.AzureOpenAIEndpoint" />
+    </div>
+    <div class="mb-3">
+        <label>Azure OpenAI ApiKey</label>
+        <InputText type="password" class="form-control" @bind-Value="settings.AzureOpenAIApiKey" />
+    </div>
+    <div class="mb-3">
+        <label>Hugging Face MCP Server</label>
+        <InputText class="form-control" @bind-Value="settings.McpServerEndpoint" />
+    </div>
+    <button class="btn btn-primary" type="submit">저장</button>
+</EditForm>
+
+@if (saveSuccess)
+{
+    <div class="alert alert-success mt-3">설정이 저장되었습니다.</div>
+}
+@if (!string.IsNullOrEmpty(saveError))
+{
+    <div class="alert alert-danger mt-3">@saveError</div>
+}
+
+<div class="mt-4">
+    <h5>서비스 상태</h5>
+    <span class="badge @(string.IsNullOrWhiteSpace(settings.HuggingFaceToken) ? "bg-warning" : "bg-success")">
+        @(string.IsNullOrWhiteSpace(settings.HuggingFaceToken) ? "Required" : "Configured") Hugging Face
+    </span>
+    <span class="badge @(string.IsNullOrWhiteSpace(settings.GitHubModelToken) ? "bg-secondary" : "bg-success")">
+        @(string.IsNullOrWhiteSpace(settings.GitHubModelToken) ? "Optional" : "Configured") GitHub Models
+    </span>
+    <span class="badge @(string.IsNullOrWhiteSpace(settings.AzureOpenAIEndpoint) || string.IsNullOrWhiteSpace(settings.AzureOpenAIApiKey) ? "bg-secondary" : "bg-success")">
+        @((string.IsNullOrWhiteSpace(settings.AzureOpenAIEndpoint) || string.IsNullOrWhiteSpace(settings.AzureOpenAIApiKey)) ? "Optional" : "Configured") Azure OpenAI
+    </span>
+</div>
+
+@code {
+    private SettingsModel settings = new();
+    private bool saveSuccess = false;
+    private string? saveError;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // TODO: IConfigurationService에서 설정 불러오기
+        saveSuccess = false;
+        saveError = null;
+    }
+
+    private async Task SaveSettings()
+    {
+        // TODO: IConfigurationService로 설정 저장
+        saveSuccess = true;
+        saveError = null;
+    }
+}
